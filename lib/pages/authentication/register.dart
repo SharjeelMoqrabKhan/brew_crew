@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:brew_crew/services/auth.dart';
+//import 'package:brew_crew/services/auth.dart';
 
 class Register extends StatefulWidget {
+  const Register({Key key, this.toggle}) : super(key: key);
+  final Function toggle;
   @override
   _RegisterState createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-  final AuthService _auth = AuthService();
+  //final AuthService _auth = AuthService();
   String email = '';
   String password = '';
   @override
@@ -17,6 +19,19 @@ class _RegisterState extends State<Register> {
         title: Text('Brew Crew Register'),
         centerTitle: true,
         backgroundColor: Colors.brown[400],
+        actions: [
+          FlatButton.icon(
+            onPressed: () {
+              widget.toggle();
+            },
+            icon: Icon(
+              Icons.toggle_on,
+              color: Colors.white,
+              size: 32.0,
+            ),
+            label: Text('Resgister'),
+          )
+        ],
       ),
       backgroundColor: Colors.brown[100],
       body: Container(
