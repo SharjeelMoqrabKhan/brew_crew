@@ -32,5 +32,12 @@ class AuthService {
   // signIn Emain and Password
 
   // sing out
-
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }
