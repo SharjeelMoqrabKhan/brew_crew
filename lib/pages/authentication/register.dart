@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:brew_crew/services/auth.dart';
 import 'package:brew_crew/widgets/inputDecoration.dart';
+import 'package:brew_crew/widgets/loading.dart';
 import 'package:flutter/material.dart';
 //import 'package:brew_crew/services/auth.dart';
 
@@ -17,10 +18,11 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
+  bool loading = false;
   final _keyForm = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading?Loading(): Scaffold(
       appBar: AppBar(
         title: Text('Brew Crew Register'),
         centerTitle: true,
@@ -85,11 +87,15 @@ class _RegisterState extends State<Register> {
                   ),
                   onPressed: () async {
                     if (_keyForm.currentState.validate()) {
+                      setState(() {
+                        loading = true;
+                      });
                       dynamic result =
                           await _auth.registerWithEmail(email, password);
                       if (result == null) {
                         setState(() {
                           error = 'Please provide valid email and password';
+                          loading = false;
                         });
                       }
                     }
