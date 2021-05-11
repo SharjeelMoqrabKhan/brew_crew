@@ -1,3 +1,4 @@
+import 'package:brew_crew/services/auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:brew_crew/services/auth.dart';
 
@@ -10,9 +11,11 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  //final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
   String email = '';
   String password = '';
+  String error = '';
+  final _keyForm = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,42 +42,63 @@ class _SignInState extends State<SignIn> {
           child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-                obscureText: true,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              RaisedButton(
-                color: Colors.pink[400],
-                child: Text(
-                  'Sign In',
-                  style: TextStyle(color: Colors.white),
+          key: _keyForm,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  validator: (value) => value.isEmpty ? 'Enter an email' : null,
+                  onChanged: (value) {
+                    setState(() {
+                      email = value;
+                    });
+                  },
                 ),
-                onPressed: () async {
-                  print(email);
-                  print(password);
-                },
-              )
-            ],
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  validator: (value) => value.length < 6
+                      ? 'password shall be 6 chars long'
+                      : null,
+                  onChanged: (value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                  obscureText: true,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                RaisedButton(
+                  color: Colors.pink[400],
+                  child: Text(
+                    'Sign In',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    if (_keyForm.currentState.validate()) {
+                      dynamic result =
+                          await _auth.signInWithEmail(email, password);
+                      if (result == null) {
+                        setState(() {
+                          error = 'Couldn\t sign in with these credentials ';
+                        });
+                      }
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  error,
+                  style: TextStyle(color: Colors.red, fontSize: 14),
+                )
+              ],
+            ),
           ),
         ),
       )),
