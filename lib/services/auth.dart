@@ -28,6 +28,17 @@ class AuthService {
   }
 
   // Registration Emain and Password
+  Future registerWithEmail(String email, String password) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email.trim(), password: password.trim());
+      FirebaseUser user = result.user;
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   // signIn Emain and Password
 

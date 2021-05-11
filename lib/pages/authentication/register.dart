@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:brew_crew/services/auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:brew_crew/services/auth.dart';
 
@@ -9,9 +12,10 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  //final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
   String email = '';
   String password = '';
+  String error = '';
   final _keyForm = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -77,10 +81,22 @@ class _RegisterState extends State<Register> {
                   ),
                   onPressed: () async {
                     if (_keyForm.currentState.validate()) {
-                      print(email);
-                      print(password);
+                      dynamic result =
+                          await _auth.registerWithEmail(email, password);
+                      if (result == null) {
+                        setState(() {
+                          error = 'Please provide valid email and password';
+                        });
+                      }
                     }
                   },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  error,
+                  style: TextStyle(color: Colors.red, fontSize: 14),
                 )
               ],
             ),
