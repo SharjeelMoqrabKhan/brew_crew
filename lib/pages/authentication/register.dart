@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:brew_crew/services/auth.dart';
+import 'package:brew_crew/widgets/inputDecoration.dart';
 import 'package:flutter/material.dart';
 //import 'package:brew_crew/services/auth.dart';
 
@@ -49,6 +50,7 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'Email'),
                   validator: (value) => value.isEmpty ? 'Enter an email' : null,
                   onChanged: (value) {
                     setState(() {
@@ -60,6 +62,8 @@ class _RegisterState extends State<Register> {
                   height: 20,
                 ),
                 TextFormField(
+                  decoration:
+                      textInputDecoration.copyWith(hintText: 'Password'),
                   validator: (value) => value.length < 6
                       ? 'password shall be 6 chars long'
                       : null,
