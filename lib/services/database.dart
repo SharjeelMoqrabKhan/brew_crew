@@ -12,4 +12,10 @@ class Database {
         .document(uid)
         .setData({'sugars': sugars, 'name': name, 'strength': strength});
   }
+
+  // get brew stream if any data changes/updates
+  /// Sanpshoot Method Notifies of query results at this location
+  Stream<QuerySnapshot> get brews {
+    return brewCollection.snapshots();
+  }
 }
