@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:brew_crew/model/brew_model.dart';
 
 class BrewList extends StatefulWidget {
   @override
@@ -11,10 +11,12 @@ class _BrewListState extends State<BrewList> {
   @override
   Widget build(BuildContext context) {
     //fatching the all document's data from user's firebase
-    final brew = Provider.of<QuerySnapshot>(context);
-    for (var doc in brew.documents) {
-      print(doc.data);
-    }
+    final brews = Provider.of<List<Brew>>(context);
+    brews.forEach((brew) {
+      print(brew.name);
+      print(brew.sugars);
+      print(brew.strength);
+    });
     return Container();
   }
 }
