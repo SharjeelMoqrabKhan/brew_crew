@@ -53,6 +53,18 @@ class _SettingFormState extends State<SettingForm> {
                   )
                   .toList(),
             ),
+            Slider(
+                value: (_currentStrength ?? 100).toDouble(),
+                min: 100.0,
+                max: 900.0,
+                activeColor: Colors.brown[_currentStrength ?? 100],
+                inactiveColor: Colors.brown[_currentStrength ?? 100],
+                divisions: 8,
+                onChanged: (val) {
+                  setState(() {
+                    _currentStrength = val.round();
+                  });
+                }),
             RaisedButton(
                 color: Colors.pink[400],
                 child: Text(
