@@ -40,7 +40,13 @@ class Home extends StatelessWidget {
           ],
         ),
         backgroundColor: Colors.brown[50],
-        body: BrewList(),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/coffee_bg.png'), fit: BoxFit.cover),
+          ),
+          child: BrewList(),
+        ),
       ),
     );
   }
